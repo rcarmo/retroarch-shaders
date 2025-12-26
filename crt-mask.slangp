@@ -1,7 +1,7 @@
 shaders = 2
 feedback_pass = 0
-shader0 = ../crt/shaders/crt-consumer/linearize.glsl
-shader1 = ../crt/shaders/crt-geom-mini.glsl
+shader0 = ../crt/shaders/crt-consumer/linearize.slang
+shader1 = ../crt/shaders/crt-geom-mini.slang
 filter_linear1 = true
 g_in = 2.25
 lum = 0.15
