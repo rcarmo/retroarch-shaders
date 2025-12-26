@@ -1,70 +1,95 @@
-# Carlos' custom CRT shader presets for RetroArch
+# Carlos' custom CRT shader presets for RetroArch - the Slang edition
 
-> **⚠️ Slang Conversion for iOS RetroArch**
+> `⚠️ Conversion Note`
 >
-> This is a fork with experimental `.slangp` preset files converted for use with RetroArch on iOS. The original GLSL presets (`.glslp`) have been removed. These Slang presets reference the Slang shader library and are configured with the same parameters as the original GLSL versions. This is an experimental conversion, so please test thoroughly and report any issues.
+> This is a fork with experimental `.slangp` preset files converted for use with RetroArch on iOS. The original GLSL presets (`.glslp`) have been removed, and some paths adjusted as these Slang presets reference the Slang shader library that is downloadable via the RetroArch in-app updater. This is an experimental conversion, so please test thoroughly and report any issues.
 
-This repository contains a set of custom CRT shader presets for [RetroArch](https://www.retroarch.com/) based on its [glsl-shaders](https://github.com/libretro/glsl-shaders). These presets are meant to look reasonable on resolutions slightly below 1080p and have good performance on weak graphics cards — Carlos was using them with an [ATI Mobility Radeon HD 2600](https://en.wikipedia.org/wiki/Radeon_HD_2000_series) from **2008** driving a 1680x1050 LCD screen.
+The conversions are configured with the same parameters as the original GLSL versions.
 
-- **crt-tv** &ndash; subtle scanlines and a Sony Trinitron-like mask (aperture grille);
-- **crt-tv-slotmask** &ndash; same as `crt-tv`, but with a slot mask instead (most non-Sony TVs);
-- **crt-tv-monitor** &ndash; same as `crt-tv-slotmask`, but sharper;
-- **crt-tv-slotmask-mixed** &ndash; same as `crt-tv-slotmask` but approximating slower phosphor decay;
-- **crt-scanlines** &ndash; pronounced scanlines, with no discernible mask;
-- **crt-mask** &ndash; pronounced scanlines and shadow mask (slightly harsher look than `crt-scanlines`);
-- **crt-mask-horizontal** &ndash; pronounced scanlines and a bit blurry (like a worn CRT);
-- **crt-mask-vertical** &ndash; same as `crt-mask-horizontal` but for vertical (arcade) games;
-- **crt-ega-newer** &ndash; pronounced scanlines and subtle mask, mimicking EGA monitors;
-- **crt-ega-older** &ndash; same as `crt-ega-newer` but slightly more blurry;
-- **crt-vga-newer** &ndash; barely any scanlines and subtle mask;
-- **crt-vga-older** &ndash; same as `crt-vga-newer` but slightly more blurry;
-- **crt-vga-alternate** &ndash; similar to `crt-vga-newer` with added sharp-bilinear filtering.
+The original repository is at [`carlosefr/retroarch-shaders`](https://github.com/carlosefr/retroarch-shaders), and Carlos Rodrigues is the true author of these presets--I just converted them to Slang format for macOS/iOS/tvOS RetroArch.
 
-I've found that `crt-tv-slotmask` or `crt-tv` works best for consoles, but I tend to prefer `crt-scanlines` for most arcade games. I know it's less accurate, because CRTs in arcade cabinets (like any color CRT) also had shadow masks, but fits better with my subjective memories somehow. If you want something closer to an actual arcade CRT, try `crt-mask`.
+The original GLSL shaders were meant to look reasonable on resolutions slightly below 1080p and have good performance on weak graphics cards — Carlos was using them with an [ATI Mobility Radeon HD 2600](https://en.wikipedia.org/wiki/Radeon_HD_2000_series) from `2008` driving a 1680x1050 LCD screen.
 
-The `crt-tv-slotmask-mixed` preset is sometimes useful for demos with effects that depend on a CRT's phospor persistence to blend fast switching colors, like [Mescaline Synesthesia](https://www.pouet.net/prod.php?which=54207) for the ZX Spectrum.
+| Preset                  | Description                                                                       |
+| ----------------------- | --------------------------------------------------------------------------------- |
+| `crt-tv`                | Subtle scanlines and a Sony Trinitron-like mask (aperture grille)                 |
+| `crt-tv-slotmask`       | Same as `crt-tv`, but with a slot mask instead (most non-Sony TVs)                |
+| `crt-tv-monitor`        | Same as `crt-tv-slotmask`, but sharper                                            |
+| `crt-tv-slotmask-mixed` | Same as `crt-tv-slotmask` but approximating slower phosphor decay                 |
+| `crt-scanlines`         | Pronounced scanlines, with no discernible mask                                    |
+| `crt-mask`              | Pronounced scanlines and shadow mask (slightly harsher look than `crt-scanlines`) |
+| `crt-mask-horizontal`   | Pronounced scanlines and a bit blurry (like a worn CRT)                           |
+| `crt-mask-vertical`     | Same as `crt-mask-horizontal` but for vertical (arcade) games                     |
+| `crt-ega-newer`         | Pronounced scanlines and subtle mask, mimicking EGA monitors                      |
+| `crt-ega-older`         | Same as `crt-ega-newer` but slightly more blurry                                  |
+| `crt-vga-newer`         | Barely any scanlines and subtle mask                                              |
+| `crt-vga-older`         | Same as `crt-vga-newer` but slightly more blurry                                  |
+| `crt-vga-alternate`     | Similar to `crt-vga-newer` with added sharp-bilinear filtering                    |
 
-The `crt-ega-*` presets are meant to be used with an MS-DOS emulator that can do single-scan (like [DOSBox Pure](https://github.com/schellingb/dosbox-pure)), otherwise the scanlines won't be realistic at all. In VGA low-res graphics modes (e.g. 320x200) each row of pixels is drawn as two consecutive scanlines (double-scan), but not in EGA. In real EGA monitors the scanlines were very visible, while in VGA monitors they weren't.
+Quoting Carlos:
 
-Both the EGA and VGA presets approximate a slot mask which, truth be told, isn't very realistic upon close inspection but still provides reasonable texture from a distance. In reality, PC monitor shadow masks mostly used [triads](https://en.wikipedia.org/wiki/Shadow_mask#/media/File:CRT_pixel_array.jpg) (circular dots in a triangular arrangement), but I haven't yet found a shader that simulates this and fulfills my performance and resolution requirements.
+> I've found that `crt-tv-slotmask` or `crt-tv` works best for consoles, but I tend to prefer `crt-scanlines` for most arcade games. I know it's less accurate, because CRTs in arcade cabinets (like any color CRT) also had shadow masks, but fits better with my subjective memories somehow. If you want something closer to an actual arcade CRT, try `crt-mask`.
+>
+> The `crt-tv-slotmask-mixed` preset is sometimes useful for demos with effects that depend on a CRT's phospor persistence to blend fast switching colors, like [Mescaline Synesthesia](https://www.pouet.net/prod.php?which=54207) for the ZX Spectrum.
+>
+> The `crt-ega-*` presets are meant to be used with an MS-DOS emulator that can do single-scan (like [DOSBox Pure](https://github.com/schellingb/dosbox-pure)), otherwise the scanlines won't be realistic at all. In VGA low-res graphics modes (e.g. 320x200) each row of pixels is drawn as two consecutive scanlines (double-scan), but not in EGA. In real EGA monitors the scanlines were very visible, while in VGA monitors they weren't.
+>
+> Both the EGA and VGA presets approximate a slot mask which, truth be told, isn't very realistic upon close inspection but still provides reasonable texture from a distance. In reality, PC monitor shadow masks mostly used [triads](https://en.wikipedia.org/wiki/Shadow_mask#/media/File:CRT_pixel_array.jpg) (circular dots in a triangular arrangement), but I haven't yet found a shader that simulates this and fulfills my performance and resolution requirements.
 
 ## Composite Output
 
-In the `composite` directory there are a couple more presets that may be useful when using an actual CRT fed by the composite video output of a Raspberry Pi. These (of course) don't attempt to simulate a CRT, they merely adjust the image slightly:
+In the `composite` directory there are a couple more presets designed to be useful when using an actual CRT fed by the composite video output of a Raspberry Pi, and that were also converted for the sake of completeness. These (of course) don't attempt to simulate a CRT, they merely adjust the image slightly:
 
-- **composite** &ndash; sharp-bilinear filtering and gamma adjustment;
-- **composite-mixed** &ndash; sharp-bilinear filtering, approximating a slower phosphor.
+| Preset            | Description                                               |
+| ----------------- | --------------------------------------------------------- |
+| `composite`       | Sharp-bilinear filtering and gamma adjustment             |
+| `composite-mixed` | Sharp-bilinear filtering, approximating a slower phosphor |
 
-You may be wondering why sharp-bilinear filtering is necessary, but consider that the emulated system isn't driving the CRT's electron beam directly, therefore the game's resolution probably doesn't match the Raspberry Pi's output resolution. For example, a Mega Drive game at 320x224 with the Pi outputting 720x480i. The sharp-bilinear filter makes the pixels uniformly sized while minimizing blur.
+> You may be wondering why sharp-bilinear filtering is necessary, but consider that the emulated system isn't driving the CRT's electron beam directly, therefore the game's resolution probably doesn't match the Raspberry Pi's output resolution. For example, a Mega Drive game at 320x224 with the Pi outputting 720x480i. The sharp-bilinear filter makes the pixels uniformly sized while minimizing blur.
+>
+> Also, you may wonder why it's necessary to approximate a slower phosphor. Again, because the emulated system isn't driving the CRT, it may be expecting a progressive scan output when the Pi is actually doing interlaced output. With interlacing the scanlines of successive frames don't blend together because the scanlines of the next frame are drawn in the empty space between the scanlines of the previous frame.
+>
+> For these and other reasons, emulation on a Raspberry Pi with composite output to a CRT isn't an accurate reproduction of the orignal hardware. Though, in practice, it's often close enough.
 
-Also, you may wonder why it's necessary to approximate a slower phosphor. Again, because the emulated system isn't driving the CRT, it may be expecting a progressive scan output when the Pi is actually doing interlaced output. With interlacing the scanlines of successive frames don't blend together because the scanlines of the next frame are drawn in the empty space between the scanlines of the previous frame.
+## Installation
 
-For these and other reasons, emulation on a Raspberry Pi with composite output to a CRT isn't an accurate reproduction of the orignal hardware. Though, in practice, it's often close enough.
+### macOS RetroArch
 
-## Install
+Download shaders with the online updater, then:
+
+```bash
+cd ~/Library/Application\ Support/RetroArch/shaders/shaders_slang/
+git clone https://github.com/rcarmo/retroarch-shaders.git custom
+```
+
+The new presets will appear in RetroArch's `Shaders / Load Preset` menu under the `custom` folder.
 
 ### iOS RetroArch
 
-Clone this repository using Working Copy and move the contents into RetroArch's shader directory on iOS. The exact path depends on how you access RetroArch's file system, but typically it would be:
+Clone this repository using Working Copy and move the contents into RetroArch's shader directory on iOS. The exact path depends on how you access RetroArch's file system, but typically the final path would be:
 
-```
-/var/mobile/Containers/Data/PluginSupport/FileProvider/com.libretro.RetroArch/File Provider Storage/retroarch/shaders/custom
+```bash
+/var/mobile/Containers/Data/PluginSupport/FileProvider/com.libretro.RetroArch/File Provider Storage/retroarch/shaders/shaders_slang/custom
 ```
 
-Or through the Files app if you have set up iCloud sync:
+Or through the Files app:
 
-```
-iCloud Drive/RetroArch/shaders/custom
+```bash
+RetroArch/shaders/shaders_slang/custom
 ```
 
 The new presets should appear in RetroArch's `Shaders / Load Preset` menu under the `custom` folder.
+
+### tvOS RetroArch
+
+It's a world of pain, but totally worth it. I'll eventually write a proper guide.
 
 ### Original (Linux/Desktop)
 
 Clone this repository into a subdirectory of RetroArch's shader directory, like this:
 
-```
-cd /opt/retropie/configs/all/retroarch/shaders
+```bash
+cd /opt/retropie/configs/all/retroarch/shaders/shaders_slang/
 git clone https://github.com/carlosefr/retroarch-shaders.git custom
 ```
 
