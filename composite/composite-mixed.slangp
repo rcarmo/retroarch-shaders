@@ -1,7 +1,7 @@
 shaders = "2"
 shader0 = "../../motionblur/shaders/mix_frames.slang"
 filter_linear0 = "false"
-shader1 = "../../interpolation/shaders/sharp-bilinear-simple.slang"
+shader1 = "../../pixel-art-scaling/shaders/sharp-bilinear-simple.slang"
 filter_linear1 = "true"
 wrap_mode1 = "clamp_to_border"
 mipmap_input1 = "false"
